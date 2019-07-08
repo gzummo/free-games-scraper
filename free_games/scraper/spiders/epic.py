@@ -83,8 +83,8 @@ class EpicSpider(scrapy.Spider):
             game_data['title'] = element.get('title')
             game_data['store'] = element.get('namespace')
             game_data['url'] = 'https://www.epicgames.com/store/en-US/product/{}'.format(element.get('productSlug'))
-            game_data['img'] = image_url,
-            game_data['startDate'] = start_date,
-            game_data['endDate'] = end_date,
+            game_data['img'] = image_url
+            game_data['startDate'] = start_date
+            game_data['endDate'] = end_date
 
             yield game_data
