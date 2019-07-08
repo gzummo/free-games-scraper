@@ -1,11 +1,12 @@
 import json
 import scrapy
+from scraper.items import GameItem
 
 
 class EpicSpider(scrapy.Spider):
     name = 'epic'
     allowed_domains = ['graphql.epicgames.com/graphql']
-    
+
     query = """
     query promotionsQuery($namespace: String!, $country: String!) {
         Catalog {
@@ -77,11 +78,13 @@ class EpicSpider(scrapy.Spider):
                     start_date = promotion[0].get('promotionalOffers')[0].get('startDate')
                     end_date = promotion[0].get('promotionalOffers')[0].get('endDate')
 
-            yield {
-                'title': element.get('title'),
-                'store': element.get('namespace'),
-                'url': 'https://www.epicgames.com/store/en-US/product/{}'.format(element.get('productSlug')),
-                'img': image_url,
-                'startDate': start_date,
-                'endDate': end_date,
-            }
+            game_data = GameItem()
+
+            game_data['title'] = element.get('title')
+            game_data['store'] = element.get('namespace')
+            game_data['url'] = 'https://www.epicgames.com/store/en-US/product/{}'.format(element.get('productSlug'))
+            game_data['img'] = image_url,
+            game_data['startDate'] = start_date,
+            game_data['endDate'] = end_date,
+
+            yield game_data
