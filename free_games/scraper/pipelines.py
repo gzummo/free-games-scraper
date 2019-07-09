@@ -1,4 +1,5 @@
 from pymongo import MongoClient, ASCENDING, errors
+from scrapy.exceptions import DropItem
 
 
 class MongoPipeline(object):
@@ -35,6 +36,7 @@ class MongoPipeline(object):
     def process_item(self, item, spider):
         try:
             self.db[self.collection_name].insert_one(dict(item))
+            return item
         except errors.DuplicateKeyError:
-            pass
-        return item
+            raise DropItem('This item already exists : {}, {}'.format(item['title'], item['store']))
+
