@@ -65,10 +65,17 @@ COOKIES_ENABLED = False
 # Configure item pipelines
 # See https://doc.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
+    'scraper.pipelines.RedisPipeline': 200,
     'scraper.pipelines.MongoPipeline': 300,
 }
+# MONGODB
 MONGO_URI = 'mongodb://localhost:27027/'
 MONGO_DB = 'free_games'
+
+# REDIS
+REDIS_HOST = 'localhost'
+REDIS_PORT = 6389
+REDIS_DB = 0
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See https://doc.scrapy.org/en/latest/topics/autothrottle.html
