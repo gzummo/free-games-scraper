@@ -6,6 +6,7 @@
 # https://doc.scrapy.org/en/latest/topics/spider-middleware.html
 
 from scrapy import signals
+from fake_useragent import UserAgent
 
 
 class ScraperSpiderMiddleware(object):
@@ -61,6 +62,9 @@ class ScraperDownloaderMiddleware(object):
     # scrapy acts as if the downloader middleware does not modify the
     # passed objects.
 
+    def __init__(self):
+        self.ua = UserAgent(cache=False, verify_ssl=False)
+
     @classmethod
     def from_crawler(cls, crawler):
         # This method is used by Scrapy to create your spiders.
@@ -78,6 +82,8 @@ class ScraperDownloaderMiddleware(object):
         # - or return a Request object
         # - or raise IgnoreRequest: process_exception() methods of
         #   installed downloader middleware will be called
+
+        request.headers.setdefault('User-Agent', self.ua.random)
         return None
 
     def process_response(self, request, response, spider):
