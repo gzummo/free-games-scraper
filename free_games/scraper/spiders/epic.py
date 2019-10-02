@@ -171,7 +171,8 @@ class EpicSpider(scrapy.Spider):
 
             game_data['title'] = element.get('title')
             game_data['store'] = 'Epic'
-            game_data['url'] = 'https://www.epicgames.com/store/en-US/product/{}'.format(element.get('productSlug'))
+            game_data['url'] = 'https://www.epicgames.com/store/en-US/product/{}'\
+                .format(element.get('customAttributes')[3].get('value'))
             game_data['img_coming_soon'] = image_coming_soon
             game_data['img_logo'] = image_logo
             game_data['img_wide'] = image_wide
