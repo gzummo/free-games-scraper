@@ -117,10 +117,13 @@ class EpicSpider(scrapy.Spider):
         for element in elements:
             start_date = None
             end_date = None
-            for i, promotion in element.get('promotions', {}).items():
-                if len(promotion) != 0:
-                    start_date = promotion[0].get('promotionalOffers', [])[0].get('startDate', '')
-                    end_date = promotion[0].get('promotionalOffers', [])[0].get('endDate', '')
+            if element.get('promotions'):
+                for i, promotion in element.get('promotions', {}).items():
+                    if len(promotion) != 0:
+                        start_date = promotion[0].get('promotionalOffers', [])[0].get('startDate', '')
+                        end_date = promotion[0].get('promotionalOffers', [])[0].get('endDate', '')
+            else:
+                continue 
 
             if 'collection' in element.get('productSlug', {}):
                 self.bundle_data['variables']['offerId'] = element.get('id', {})
