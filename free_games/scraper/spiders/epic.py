@@ -117,7 +117,7 @@ class EpicSpider(scrapy.Spider):
         for element in elements:
             start_date = None
             end_date = None
-            for i, promotion in element.get('promotions').items():
+            for i, promotion in element.get('promotions', {}).items():
                 if len(promotion) != 0:
                     start_date = promotion[0].get('promotionalOffers', [])[0].get('startDate', '')
                     end_date = promotion[0].get('promotionalOffers', [])[0].get('endDate', '')
