@@ -115,8 +115,8 @@ class EpicSpider(scrapy.Spider):
         data = json.loads(response.text).get('data', {})
         elements = data.get('Catalog', {}).get('catalogOffers', {}).get('elements', {})
         for element in elements:
-            start_date = None
-            end_date = None
+            start_date = ''
+            end_date = ''
             if element.get('promotions'):
                 for i, promotion in element.get('promotions', {}).items():
                     if len(promotion) != 0:
@@ -135,9 +135,9 @@ class EpicSpider(scrapy.Spider):
                                      cb_kwargs={'start_date': start_date, 'end_date': end_date},
                                      dont_filter=True)
             else:
-                image_coming_soon = None
-                image_logo = None
-                image_wide = None
+                image_coming_soon = ''
+                image_logo = ''
+                image_wide = ''
 
                 for image in element.get('keyImages'):
                     if image.get('type') == 'ComingSoon':
@@ -160,9 +160,9 @@ class EpicSpider(scrapy.Spider):
         data = json.loads(response.text).get('data', {})
         elements = data.get('Catalog', {}).get('catalogOffer', {}).get('collectionOffers', {})
         for element in elements:
-            image_coming_soon = None
-            image_logo = None
-            image_wide = None
+            image_coming_soon = ''
+            image_logo = ''
+            image_wide = ''
 
             for image in element.get('keyImages'):
                 if image.get('type') == 'DieselGameBoxLogo':
